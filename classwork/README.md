@@ -1,39 +1,18 @@
-## MNIST 手写数字识别分类任务
+### MNIST-classifier
 
-### 代码
+##### Introduction
 
-代码的Jupyter Notebook模板在`logistic_regression.ipynb`文件中给出。
+- [MNIST database](http://yann.lecun.com/exdb/mnist/) s a large database of handwritten digits that is commonly used for training various image processing systems. The database is also widely used for training and testing in the field of [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
+- 分类效果看[logistic_regression.ipynb](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/logistic_regression.ipynb)，核心的LogisticRegression代码为[classifiers/logistic_regression.py](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/classifiers/logistic_regression.py)
 
-需要实现的classifier在`classwork/DSVC/classifiers/logistic_regression.py`中给出。
+##### Code
 
-### 数据
+- [logistic_regression.ipynb](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/logistic_regression.ipynb)
+- [classifiers/logistic_regression.py](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/classifiers/logistic_regression.py)
 
-- [MNIST手写数字数据集](http://yann.lecun.com/exdb/mnist/)
+##### Data
 
-将数据存放在路径`classwork/DSVC/datasets/`下即可。
+- [Download MNIST.csv](https://raw.githubusercontent.com/WenDesi/lihang_book_algorithm/master/data/train.csv)
+- download data to `/datasets`，and rename `train.csv` with `MNIST.csv`
 
-### 运行
-
-在终端或命令行窗口中，选定`classwork/`的目录下（包含此README文件），运行下方的命令：
-
-`jupyter notebook `
-
-这样就能够启动jupyter notebook软件，并在你的浏览器中打开`logistic_regression.ipynb`文件。
-
-### 任务
-
-The Jupyter Notebook `logistic_regressino.ipynb` will walk you through implementing the classifier.
-
- You should choose and extract features on your own.
-
-- Binary classification with Logistic Regression classifier
-- Multiclass classification with Logistic Regression classifier and "one vs all"
-
-### 作业提交
-
-- 提交方式：邮件的标题为`姓名-assignment3`。
-- 格式说明：
-  - 需要提交的文件：`logistic_regression.ipynb`文件以及生成的`.html`文件和相关的资源文件、`logistic_regression.py`代码文件。
-  - 将这些文件压缩成一个`.zip`文件， 命名与邮件标题相同。
-  - 你提交的作业版本应与Github上的最新版本一致。
 
