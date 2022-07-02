@@ -1,56 +1,153 @@
 import numpy as np
+from bitstring import xrange
+import random
+import math
 
+class LogisticRegression(object):
 
-def sigmoid(z):
-    return 1.0 / (1.0 + np.exp(-z))
+    def __init__(self):
+        self.w = None
+        self.ww = None
 
+    def sigmoid(self,z):
+        return 1.0 / ( 1.0 + np.exp(-z) )
 
-def costFunction(theta, X, y):
-    m = X.shape[0]
-    0
-    z = X.dot(theta)
-    J = (-y.T.dot(np.log(sigmoid(z))) - (1 - y.T).dot(np.log(1 - sigmoid(z)))) / m
-    return J[0]
+    def loss(self, X_batch, y_batch):
+        """
+        计算损失函数及其导数。
+        子类将覆盖它。
+        输入:
+        - X_batch:形状为(N,D)的numpy数组,包含N的minibatch
+        数据点;每个点都有维数d。
+        - y_batch:shape(N,)的numpy数组,包含minibatch的标签。
+        返回:一个元组,包含:
+        -作为单一浮动的损失
+        -相对于自身的梯度。w;与W形状相同的数组
+        """
+        #########################################################################
+        # TODO:                                                                 #
+        # 计算损失和导数                                 #
+        #########################################################################
+        m = X_batch.shape[0]
+        loss = 0
+        z = X_batch.dot(self.w)
+        loss = (-y_batch.T.dot(np.log(self.sigmoid(z))) - (1.0 - y_batch.T).dot(np.log(1.0 - self.sigmoid(z))))/m
+        grad = np.zeros_like(self.w)
+        grad = X_batch.T.dot(self.sigmoid(z) - y_batch) /m
 
+        return loss,grad
 
-def gradient(theta, X, y):
-    m = X.shape[0]  # X.shape = (100,3)
-    grad = np.zeros_like(theta)
-    z = X.dot(theta.reshape(-1, 1))  # theta.shape = (3,) theta.reshape(-1,1).shape = (3,1)
-    grad = (1.0 / m) * X.T.dot((sigmoid(z) - y))
-    return grad.flatten()
+    def train(self, X, y, learning_rate=1e-3, num_iters=100,
+            batch_size=200, verbose=True):
 
+        """
+        使用随机梯度下降训练这个线性分类器。
+        Inputs:
+        - X:包含训练数据的shape (N,D)的numpy数组;有N个d维的训练样本。
+        - y:包含训练标签的shape (N,)的numpy数组;
+        - learning_rate: (float)优化的学习率。
+        - num_iters: (integer)优化时要采取的步骤数
+        - batch_size:(整数)每个步骤中要使用的训练示例的数量。
+        - verbose: (boolean)如果为true,则在优化过程中打印进度。
+        产出:
+        包含每次训练迭代的损失函数值的列表。
+        """
+        num_train, dim = X.shape
+        if self.w is None:
+            self.w = 0.001 * np.random.randn(dim)
+        loss_history = []
+        for it in xrange(num_iters):
+            X_batch = None
+            y_batch = None
+            '''
+            # TODO: #
+            #来自训练数据的样本batch_size元素及其#
+            #在这一轮梯度下降中使用的相应标签。#
+            #将数据存储在X_batch中.并将它们对应的标签存储在#
+            # y _ batch采样后.X_batch应具有形状(batch_size.dim) #
+            #和y_batch应具有shape (batch_size.)#
+            #提示:使用np.random.choice生成索引。用#采样
+            #替换比不替换的采样更快。
+            '''
+            # print("batchSize：",batch_size)
+            Sample_batch = np.random.choice(np.arange(num_train), batch_size)
+            X_batch = X[Sample_batch]
+            y_batch = y[Sample_batch]
 
-# def mapFeature(X):
-#     poly = PolynomialFeatures(6)
-#     XX = poly.fit_transform(X)
-#     return XX
+            # evaluate loss and gradient
+            loss, grad = self.loss(X_batch, y_batch)
+            loss_history.append(loss)
 
-def mapFeature(x1col, x2col):
-    degrees = 6
-    out = np.ones((x1col.shape[0], 1))
-    for i in range(1, degrees + 1):
-        for j in range(0, i + 1):
-            term1 = x1col ** (i - j)
-            term2 = x2col ** (j)
-            term = (term1 * term2).reshape(term1.shape[0], 1)
-            out = np.hstack((out, term))
-    return out
+            # perform parameter update
+            #########################################################################
+            # TODO:                                                                 #
+            # 使用梯度和学习率更新权重。         
+            #########################################################################
+            self.w += -learning_rate*grad
+            #########################################################################
+            #                       END OF YOUR CODE                                #
+            #########################################################################
+            if verbose and it % 50 == 0:
+                print ('iteration %d / %d: loss %f' % (it, num_iters, loss))
 
+        return loss_history
 
-def costFunctionReg(theta, lamb, X, y):
-    m = X.shape[0]
-    J = 0
-    z = X.dot(theta)
-    J = (-y.T.dot(np.log(sigmoid(z))) - (1 - y.T).dot(np.log(1.0 - sigmoid(z)))) / m
-    J += lamb / (2.0 * m) * theta[1:].T.dot(theta[1:])
-    return J[0]
+    def predict(self, X):
+        """
+            使用此线性分类器的训练权重来预测数据点的标签。
+            输入:
+            训练数据的X: D x N数组。每一列都是一个D维点。
+            返回
+            -y_pred:x中数据的预测标签。y _ pred是一维的
+            长度为N的数组,每个元素都是给出预测类的整数。
+        """
+        y_pred = np.zeros(X.shape[0])
+        ###########################################################################
+        # TODO:                                                                   #
+        # 实现此方法。将预测的标签存储在y_pred中。           #
+        ###########################################################################
+        y_pred = self.sigmoid(X.dot(self.w))
+        for i in range(X.shape[0]):
+            if y_pred[i] >= 0.50:
+                y_pred[i] = 1
+            else:
+                y_pred[i] = 0
+        ###########################################################################
+        #                           END OF YOUR CODE                              #
+        ###########################################################################
+        return y_pred
 
+    def one_vs_all(self, X, y, learning_rate=1e-3, num_iters=100,
+            batch_size=200, verbose = True):
+        """
+        使用随机梯度下降训练这个线性分类器。
+        输入:
+        - X:包含训练数据的shape (N,D)的numpy数组;有N个
+        d维的训练样本。
+        - y:包含训练标签的shape (N,)的numpy数组;
+        - learning_rate: (float)优化的学习率。
+        - num_iters: (integer)优化时要采取的步骤数
+        - batch_size:(整数)每个步骤中要使用的训练示例的数量。
+        - verbose: (boolean)如果为true,则在优化过程中打印进度。
+        """
+        
+        num_train, dim = X.shape
+        self.ww = np.zeros((dim,10))
+        for it in range(10):
+            y_train = []
+            for label in y:
+                if label == it:
+                    y_train.append(1)
+                else:
+                    y_train.append(0)
+            y_train = np.array(y_train)
+            self.w = None
+            print ("it = ", it)
+            self.train(X,y_train,learning_rate, num_iters ,batch_size)
+            self.ww[:,it] = self.w
+    
 
-def gradientReg(theta, lamb, X, y):
-    m = X.shape[0]
-    np.zeros_like(theta)
-    z = X.dot(theta.reshape(-1, 1))
-    grad = (1.0 / m) * X.T.dot((sigmoid(z) - y)) + (lamb / m) * theta.reshape(-1, 1)
-    grad[0] -= (lamb / m) * theta[0]
-    return grad.flatten()
+    def one_vs_all_predict(self, X):
+        laybels = self.sigmoid(X.dot(self.ww))
+        y_pred = np.argmax(laybels,axis=1)
+        return 
