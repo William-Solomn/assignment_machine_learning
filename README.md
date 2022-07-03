@@ -1,31 +1,50 @@
-## assignment3 
+[TOC]
 
-#### 分工
+|  姓名  |               完成任务情况               |
+| :----: | :--------------------------------------: |
+| 仇誓博 | 损失函数、训练函数、二分类优化、md文档编写 |
+|  陈昊  |                                          |
+|  李婕  |                                          |
+| 董轩言 |                                          |
+|        |                                          |
 
-- Logistics Regression
-- Logistics Regression MNIST 手写数字识别数据集分类任务
+ 
 
-以下的内容可以帮助你更好的完成本次的作业：
+## MNIST-classifier
 
-- [小记Logistics Regression](https://quinwu.github.io/2017/05/05/ML-Logistic-Regression/)
-- [Python 可视化 Logistics Regression效果](https://github.com/quinwu/ml_implementation/tree/master/Logistic-Regression/optimizeMinimize)
+### 二分类
 
-#### 作业
+#### 数据展示
+<img src="./pic/01.png" style="zoom: 50%;" />
 
-- Logistics Regression Python 可视化实现（optional）
+#### 二分类后
+<img src="./pic/02.png" style="zoom:50%;" />
 
-  独立使用Numpy、Matplotlib来完成Logistic Regression的可视化任务。数据集使用上面我给出的可视化效果链接中对应的数据集。在上面给出了我的实现代码来提供参考。
+#### 优化前
+<img src="./pic/03.png" style="zoom: 50%;" />
 
-  - 第一个可视化任务中的Decision Boundary比较简单，不建议使用其他第三方包。
-  - 第二个可视化任务中的Decision Boundary属于多项式较为复杂，可以使用scipy.optimize或者scikit-learn来完成。 
+#### 优化中
+<img src="./pic/04.png" style="zoom: 50%;" />
 
-- [MNIST手写数字识别分类任务](classwork)
+#### 优化后
+<img src="./pic/05.png" style="zoom:67%;" />
 
-   **必须手动实现Logistics Regression，不得使用任何第三方库**
+#### 结果
+<img src="./pic/07.png" style="zoom:67%;" />
 
-  - Logistics Regression完成MNIST数据集上的二分类任务。
+### 多分类结果展示
 
-  - Logistics Regression完成MNIST数据集上的多分类任务（one vs all ）。
+<img src="./pic/06.png" style="zoom:67%;" />
 
-    ​
+## optimize_minimize
+
+#### 数据展示
+<img src="./pic/08.png" style="zoom:67%;" />
+
+#### 直线边界划分展示
+<img src="./pic/09.png" style="zoom:67%;" />
+
+#### 曲线边界划分展示
+<img src="./pic/10.png" style="zoom:67%;" />
+
 
