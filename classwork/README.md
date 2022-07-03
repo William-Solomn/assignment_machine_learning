@@ -1,18 +1,23 @@
 ### MNIST-classifier
 
-##### Introduction
+##### 二分类
 
-- [MNIST database](http://yann.lecun.com/exdb/mnist/) s a large database of handwritten digits that is commonly used for training various image processing systems. The database is also widely used for training and testing in the field of [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
-- 分类效果看[logistic_regression.ipynb](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/logistic_regression.ipynb)，核心的LogisticRegression代码为[classifiers/logistic_regression.py](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/classifiers/logistic_regression.py)
+##### 数据展示
+![](../pic/01.png)
 
-##### Code
+##### 二分类后
+![](../pic/02.png)
 
-- [logistic_regression.ipynb](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/logistic_regression.ipynb)
-- [classifiers/logistic_regression.py](https://github.com/quinwu/ml_implementation/blob/master/Logistic-Regression/MNIST-classifier/classifiers/logistic_regression.py)
+##### 优化前
+![](../pic/03.png)
 
+##### 优化中
+![](../pic/04.png)
+
+### 优化后
+![](../pic/05.png)
 ##### Data
 
-- [Download MNIST.csv](https://raw.githubusercontent.com/WenDesi/lihang_book_algorithm/master/data/train.csv)
-- download data to `/datasets`，and rename `train.csv` with `MNIST.csv`
+
 
 

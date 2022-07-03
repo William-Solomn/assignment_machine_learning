@@ -34,7 +34,6 @@ class LogisticRegression(object):
         grad = X_batch.T.dot(self.sigmoid(z) - y_batch) /m
 
         return loss,grad
-
     def train(self, X, y, learning_rate=1e-3, num_iters=100,
             batch_size=200, verbose=True):
 
@@ -67,7 +66,7 @@ class LogisticRegression(object):
             #提示:使用np.random.choice生成索引。用#采样
             #替换比不替换的采样更快。
             '''
-            
+            # print("batchSize：",batch_size)
             Sample_batch = np.random.choice(np.arange(num_train), batch_size)
             X_batch = X[Sample_batch]
             y_batch = y[Sample_batch]
@@ -76,12 +75,19 @@ class LogisticRegression(object):
             loss, grad = self.loss(X_batch, y_batch)
             loss_history.append(loss)
 
-            if verbose and it % 149 == 0:
-                # print ('iteration %d / %d: 损失情况： %f' % (it, num_iters, loss))
-                print ('损失情况是： %f' % (loss))
+            # perform parameter update
+            #########################################################################
+            # TODO:                                                                 #
+            # 使用梯度和学习率更新权重。         
+            #########################################################################
+            self.w += -learning_rate*grad
+            #########################################################################
+            #                       END OF YOUR CODE                                #
+            #########################################################################
+            if verbose and it % 50 == 0:
+                print ('iteration %d / %d: loss %f' % (it, num_iters, loss))
 
         return loss_history
-
     def predict(self, X):
         """
             使用此线性分类器的训练权重来预测数据点的标签。

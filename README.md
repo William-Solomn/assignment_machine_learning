@@ -1,6 +1,6 @@
 ## assignment3 
 
-#### 内容
+#### 分工
 
 - Logistics Regression
 - Logistics Regression MNIST 手写数字识别数据集分类任务
