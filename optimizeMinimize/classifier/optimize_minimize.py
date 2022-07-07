@@ -10,7 +10,7 @@ class OptimizeMinmize(object):
         return 1.0 / (1.0 + np.exp(-z))
 
 
-    def costFunction(self, theta, X, y):
+    def costFunction(self, theta, X, y):                                                            # M
         m = X.shape[0]
 
         z = X.dot(theta)
@@ -26,7 +26,7 @@ class OptimizeMinmize(object):
         return grad.flatten()
 
 
-    def mapFeature(self, x1col, x2col):
+    def mapFeature(self, x1col, x2col):                                                             # L
         degrees = 6
         out = np.ones((x1col.shape[0],1))
         for i in range(1, degrees+1):
@@ -78,7 +78,7 @@ class OptimizeMinmize(object):
         plt.xlabel('exam 1')
         plt.ylabel('exam 2')
 
-    def decisionBoundary(self, theta, path):
+    def decisionBoundary(self, theta, path):                                                    #  M
         self.plotScatter(path)
         X, y = self.loadData(path)
         y.astype(int)
@@ -86,8 +86,12 @@ class OptimizeMinmize(object):
         boundary_ys = (-1. / theta[2]) * (theta[0] + theta[1] * boundary_xs)  
         plt.plot(boundary_xs, boundary_ys)
 
+    def optimizeRegularizedTheta(self, theta, X, y, lamb=0.):                                       # M
+        result = op.minimize(self.costFunctionReg, theta, args=(lamb, X, y), method='BFGS',
+                             options={"maxiter": 500, "disp": False})
+        return np.array([result.x]), result.fun
 
-    def decisionBoundaryReg(self, theta, X, y, lamb=0.):
+    def decisionBoundaryReg(self, theta, X, y, lamb=0.):                                            # L
         theta, mincost = self.optimizeRegularizedTheta(theta, X, y, lamb)
         xvals = np.linspace(-1, 1.5, 50)
         yvals = np.linspace(-1, 1.5, 50)
@@ -103,12 +107,8 @@ class OptimizeMinmize(object):
         plt.title("Decision Boundary with Lambda = %d" % lamb)
 
 
-    def optimizeRegularizedTheta(self, theta, X, y, lamb=0.):
-        result = op.minimize(self.costFunctionReg, theta, args=(lamb, X, y), method='BFGS',
-                             options={"maxiter": 500, "disp": False})
-        return np.array([result.x]), result.fun
-
     def subplotDecisionBoundary(self, path, theta, X, y):
+
         plt.figure(figsize=(12, 10))
         plt.subplot(221)
         self.plotScatter(path)
@@ -118,10 +118,10 @@ class OptimizeMinmize(object):
         self.decisionBoundaryReg(theta, X, y, 1.)
         plt.subplot(223)
         self.plotScatter(path)
-        self.decisionBoundaryReg(theta, X, y, 10.)
+        self.decisionBoundaryReg(theta, X, y, 3.)
         plt.subplot(224)
         self.plotScatter(path)
-        self.decisionBoundaryReg(theta, X, y, 100.)
+        self.decisionBoundaryReg(theta, X, y, 10.)
 
 
     def LogisticReg(self, path):

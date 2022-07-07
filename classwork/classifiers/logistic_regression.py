@@ -73,8 +73,7 @@ class LogisticRegression(object):
         return y_pred
 
 
-    def one_vs_all(self, X, y, learning_rate=1e-3, num_iters=100,
-                   batch_size=200, verbose=True):
+    def deal_all(self, X, y, learning_rate=0.09, num_iters=100,batch_size=200,verbose = False):
 
         loss_history_one = np.empty(shape=[1,num_iters],dtype=float)# [一行，学习步骤次数 列]
         loss_history_servel = np.empty(shape=[10,num_iters],dtype=float)
